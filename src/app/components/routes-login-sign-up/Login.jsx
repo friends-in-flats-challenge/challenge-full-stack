@@ -3,8 +3,6 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useAuth } from '@/context/authprovider';
 
-
-
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -35,7 +33,6 @@ const Login = () => {
 
   return (
     <div className="container mx-auto p-4 max-w-md">
- 
       <h1 className="text-3xl font-bold mb-4 text-center">Login</h1>
       {error && (
         <div className="mb-4 p-2 text-red-700 bg-red-100 border border-red-200 rounded">
@@ -73,6 +70,18 @@ const Login = () => {
           </button>
         </div>
       </form>
+
+      {/* Media Queries */}
+      <style jsx>{`
+        @media (max-width: 768px) {
+          .container {
+            padding: 2rem;
+          }
+          .text-3xl {
+            font-size: 2rem;
+          }
+        }
+      `}</style>
     </div>
   );
 };

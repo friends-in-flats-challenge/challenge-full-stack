@@ -1,4 +1,3 @@
-"use client";
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { signUpUser } from '@/utils/database'; // Importa la función de signup

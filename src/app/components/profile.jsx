@@ -74,7 +74,7 @@ const AuthenticatedMenu = () => {
           {user && (
             <button
               onClick={() => {
-                router.push('/add-apartment');
+                router.push('/add-apartament');
                 closeMenu();
               }}
               className="block w-full px-4 py-2 text-left hover:bg-gray-200"

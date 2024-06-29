@@ -1,9 +1,6 @@
-"use client";
 import React, { useState } from 'react';
-//import { useRouter } from 'next/router';
-const Apartments = () => {
 
- 
+const Apartments = () => {
   const [formData, setFormData] = useState({
     name: '',
     location: '',
@@ -44,7 +41,7 @@ const Apartments = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto p-12 mb-10 bg-white rounded-lg shadow-md">
+    <div className="max-w-xl mx-auto mt-20 md:mt-12 p-6 md:p-12 mb-10 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-6">Add New Apartment</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
@@ -152,6 +149,27 @@ const Apartments = () => {
           Submit
         </button>
       </form>
+
+      {/* Media queries for responsive design */}
+      <style jsx>{`
+        @media (max-width: 768px) {
+          .max-w-xl {
+            max-width: 90%;
+          }
+          .p-6 {
+            padding: 4rem;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .p-6 {
+            padding: 2rem;
+          },
+          .w-6 {
+width: 45%
+          }
+        }
+      `}</style>
     </div>
   );
 };
