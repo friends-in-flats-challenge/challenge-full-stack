@@ -2,7 +2,7 @@ import '@/app/globals.css';
 import Apartments from '@/app/components/apartaments/apartamento';
 import Header from '@/app/components/Header';
 const Apartamentspage = () => {
-  return (
+  return(
     <>
       <Header/>
       <Apartments />
