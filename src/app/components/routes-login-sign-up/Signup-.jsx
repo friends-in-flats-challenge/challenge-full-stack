@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 import { signUpUser } from '@/utils/database'; // Importa la función de signup
 
 const SignUp = () => {
@@ -13,18 +13,35 @@ const SignUp = () => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
+
+    // Validación del formato de email
+    if (!validateEmail(email)) {
+      alert('El email no es válido');
+      return;
+    }
+
+    // Validación de longitud de contraseña
+    if (password.length < 8) {
+      alert('La contraseña debe tener al menos 8 caracteres');
+      return;
+    }
+
     setIsSubmitting(true);
     try {
-      await signUpUser(email, password, name);
-      setNotification('A confirmation email has been sent to your Gmail.');
+      await signUpUser(email, password, name); // Llama a la función signUpUser para registrar al usuario
+      setNotification('A confirmation email has been sent to your email address.'); // Establece la notificación
       setIsSubmitting(false);
-      // You can add logic here to ensure that the user has confirmed their email
-      // before navigating to another page
-       router.push('/login'); 
+      router.push('/login'); // Redirige a la página de inicio de sesión después del registro exitoso
     } catch (error) {
-      alert(error.message);
+      alert(error.message); // Muestra un mensaje de alerta en caso de error
       setIsSubmitting(false);
     }
+  };
+
+  // Función para validar el formato de email
+  const validateEmail = (email) => {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
   };
 
   return (

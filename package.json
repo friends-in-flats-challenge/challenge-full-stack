@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@nuxtjs/supabase": "^1.2.2",
     "@supabase/supabase-js": "^2.43.6",
     "axios": "^1.7.2",
     "next": "14.2.4",
