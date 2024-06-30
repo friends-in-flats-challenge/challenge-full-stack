@@ -1,69 +1,77 @@
-"use client";
-
 import { useEffect, useState } from 'react';
-import { supabase } from '@/utils/Supabase'; // Asegúrate de importar supabase correctamente
+import { supabase } from '@/utils/Supabase';
 
 const Consumo = () => {
   const [apartments, setApartments] = useState([]);
   const [selectedApartment, setSelectedApartment] = useState(null);
 
   useEffect(() => {
-    const fetchApartments = async () => {
-      const { data, error } = await supabase.from('apartments').select('*');
-      if (error) {
-        console.error('Error fetching data:', error);
-      } else {
-        setApartments(data);
+    const fetchApartmentsAndRooms = async () => {
+      try {
+        const { data: apartmentData, error: apartmentError } = await supabase.from('apartments').select('*');
+        if (apartmentError) {
+          throw new Error(`Error fetching apartments: ${apartmentError.message}`);
+        }
+
+        const apartmentsWithRooms = await Promise.all(
+          apartmentData.map(async (apartment) => {
+            const { data: roomsData, error: roomsError } = await supabase
+              .from('rooms')
+              .select('*')
+              .eq('apartment_id', apartment.id);
+
+            if (roomsError) {
+              throw new Error(`Error fetching rooms for apartment ${apartment.id}: ${roomsError.message}`);
+            }
+
+            return { ...apartment, rooms: roomsData };
+          })
+        );
+
+        setApartments(apartmentsWithRooms);
+      } catch (error) {
+        console.error('Error fetching apartments and rooms:', error.message);
       }
     };
 
-    fetchApartments();
+    fetchApartmentsAndRooms();
   }, []);
 
-  const fetchRooms = async (apartmentId) => {
-    const { data, error } = await supabase
-      .from('rooms')
-      .select('*')
-      .eq('apartment_id', apartmentId);
-    if (error) {
-      console.error('Error fetching rooms:', error);
-      return [];
-    }
-    return data;
-  };
-
-  const handleViewDetails = async (apartment) => {
-    const rooms = await fetchRooms(apartment.id);
-    setSelectedApartment({ ...apartment, rooms });
+  const handleViewDetails = (apartment) => {
+    setSelectedApartment(apartment);
   };
 
   return (
-    <div className="p-6 max-w-7xl mx-auto mt-24"> {/* Ajuste del margin-top para alejar del header */}
+    <div className="p-6 max-w-7xl mx-auto mt-24">
       <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">Apartments List</h1>
       {apartments.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"> {/* Ajuste para filas de 4 en pantallas grandes */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {apartments.map((apartment) => (
             <div
               key={apartment.id}
-              className="p-4 border rounded-lg shadow-lg transform transition duration-500 hover:scale-105 hover:shadow-xl bg-white flex flex-col justify-between"
+              className="p-4 border rounded-lg shadow-lg transform transition duration-500 hover:scale-105 hover:shadow-xl bg-white"
             >
-              <div>
+              <div className="relative">
                 <img
-                  src={apartment.image_url || '/placeholder.jpg'} // Coloca un placeholder o una imagen por defecto si no hay URL
+                  src={apartment.rooms && apartment.rooms.length > 0 ? apartment.rooms[0].image_url : 'https://placehold.co/600x400'}
                   alt={apartment.name}
-                  className="w-full h-40 object-cover rounded-lg mb-4"
+                  className="w-full h-48 object-cover rounded-lg mt-2"
                 />
+                <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                  <button
+                    className="bg-white text-gray-800 font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-gray-200"
+                    onClick={() => handleViewDetails(apartment)}
+                  >
+                    View Details
+                  </button>
+                </div>
+              </div>
+              <div className="p-4">
                 <h2 className="text-xl font-semibold mb-2 text-gray-700">{apartment.name}</h2>
                 <p className="mb-2 text-gray-600"><strong>Location:</strong> {apartment.location}</p>
-                <p className="mb-2 text-gray-600"><strong>Price:</strong> ${apartment.price}</p>
+                <p className="mb-2 text-gray-600"><strong>Price:</strong> €{apartment.price} / month</p>
                 <p className="mb-2 text-gray-600"><strong>Description:</strong> {apartment.description}</p>
               </div>
-              <button
-                className="mt-4 w-full py-2 px-4 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition duration-300"
-                onClick={() => handleViewDetails(apartment)}
-              >
-                View Details
-              </button>
             </div>
           ))}
         </div>
@@ -76,10 +84,10 @@ const Consumo = () => {
           <div className="bg-white rounded-lg p-8 w-full max-w-3xl">
             <h2 className="text-2xl font-bold mb-4">{selectedApartment.name}</h2>
             <p className="mb-2 text-gray-600"><strong>Location:</strong> {selectedApartment.location}</p>
-            <p className="mb-2 text-gray-600"><strong>Price:</strong> ${selectedApartment.price}</p>
+            <p className="mb-2 text-gray-600"> €{selectedApartment.price} / month</p>
             <p className="mb-2 text-gray-600"><strong>Description:</strong> {selectedApartment.description}</p>
             <h3 className="text-xl font-semibold mb-2">Rooms</h3>
-            {selectedApartment.rooms.length > 0 ? (
+            {selectedApartment.rooms && selectedApartment.rooms.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {selectedApartment.rooms.map((room) => (
                   <div key={room.id} className="p-4 border rounded-lg bg-gray-100">
@@ -87,7 +95,7 @@ const Consumo = () => {
                     <p className="text-gray-600"><strong>Size:</strong> {room.size} sqm</p>
                     <p className="text-gray-600"><strong>Equipment:</strong> {room.equipment}</p>
                     <img
-                      src={room.image_url || '/placeholder.jpg'}
+                      src={room.image_url || 'https://placehold.co/600x400'}
                       alt={room.name}
                       className="w-full h-32 object-cover rounded-lg mt-2"
                     />

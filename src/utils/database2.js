@@ -1,5 +1,6 @@
 "use client";
 
+import { all } from "axios";
 import { supabase } from "./Supabase";
 
 export const createApartment = async (apartmentData) => {
@@ -150,3 +151,4 @@ export const deleteRoom = async (id) => {
 
   return data;
 };
+
