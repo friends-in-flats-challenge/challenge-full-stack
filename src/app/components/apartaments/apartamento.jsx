@@ -1,4 +1,6 @@
+"use client";
 import React, { useState } from 'react';
+import { createApartment } from '@/utils/database2'; // Importa la función de creación
 
 const Apartments = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +10,8 @@ const Apartments = () => {
     description: '',
     rooms: []
   });
+
+  const [message, setMessage] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,7 +24,7 @@ const Apartments = () => {
   const handleRoomChange = (index, e) => {
     const { name, value } = e.target;
     const newRooms = [...formData.rooms];
-    newRooms[index][name] = value;
+    newRooms[index] = { ...newRooms[index], [name]: value };
     setFormData({
       ...formData,
       rooms: newRooms
@@ -34,10 +38,18 @@ const Apartments = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form data submitted:', formData);
-    // Aquí puedes agregar la lógica para enviar los datos a tu backend o API
+    console.log('Form data submitted:', formData); // Asegúrate de que formData contenga los datos esperados
+  
+    try {
+      const data = await createApartment(formData);
+      console.log('Apartment created:', data);
+      setMessage('Apartment inserted successfully!');
+    } catch (error) {
+      console.error('Error creating apartment:', error.message);
+      setMessage('Failed to insert apartment and rooms');
+    }
   };
 
   return (
@@ -52,7 +64,7 @@ const Apartments = () => {
             value={formData.name}
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded-lg"
-            required
+            required // Campo obligatorio
           />
         </div>
         <div className="mb-4">
@@ -63,7 +75,7 @@ const Apartments = () => {
             value={formData.location}
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded-lg"
-            required
+            required // Campo obligatorio
           />
         </div>
         <div className="mb-4">
@@ -74,7 +86,7 @@ const Apartments = () => {
             value={formData.price}
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded-lg"
-            required
+            required // Campo obligatorio
           />
         </div>
         <div className="mb-4">
@@ -84,6 +96,7 @@ const Apartments = () => {
             value={formData.description}
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded-lg"
+            required // Campo obligatorio
           />
         </div>
 
@@ -99,6 +112,7 @@ const Apartments = () => {
                   value={room.name}
                   onChange={(e) => handleRoomChange(index, e)}
                   className="w-full px-3 py-2 border rounded-lg"
+                  required // Campo obligatorio
                 />
               </div>
               <div className="mb-2">
@@ -109,6 +123,7 @@ const Apartments = () => {
                   value={room.size}
                   onChange={(e) => handleRoomChange(index, e)}
                   className="w-full px-3 py-2 border rounded-lg"
+                  required // Campo obligatorio
                 />
               </div>
               <div className="mb-2">
@@ -119,6 +134,7 @@ const Apartments = () => {
                   value={room.equipment}
                   onChange={(e) => handleRoomChange(index, e)}
                   className="w-full px-3 py-2 border rounded-lg"
+                  required // Campo obligatorio
                 />
               </div>
               <div className="mb-2">
@@ -129,6 +145,7 @@ const Apartments = () => {
                   value={room.image_url}
                   onChange={(e) => handleRoomChange(index, e)}
                   className="w-full px-3 py-2 border rounded-lg"
+                  required // Campo obligatorio
                 />
               </div>
             </div>
@@ -149,6 +166,7 @@ const Apartments = () => {
           Submit
         </button>
       </form>
+      {message && <p className="mt-4 text-center text-green-500">{message}</p>}
 
       {/* Media queries for responsive design */}
       <style jsx>{`
@@ -164,9 +182,6 @@ const Apartments = () => {
         @media (max-width: 480px) {
           .p-6 {
             padding: 2rem;
-          },
-          .w-6 {
-width: 45%
           }
         }
       `}</style>
