@@ -34,16 +34,16 @@ const Header = () => {
           />
         </div>
         <nav className="hidden md:flex md:flex-grow md:justify-evenly md:space-x-8 text-gray-600 font-bold text-xl">
-          <Link href="/" aria-disabled className="hover:text-gray-300 cursor-pointer p-4">
+          <Link href="/" className="hover:text-gray-300 cursor-pointer p-4">
             Flat Matches
           </Link>
-          <Link href="/" aria aria-disabled className="hover:text-gray-300 cursor-pointer p-4">
+          <Link href="/"  className="hover:text-gray-300 cursor-pointer p-4">
             About Us
           </Link>
-          <Link href="/"  aria-disabled className="hover:text-gray-300 cursor-pointer p-4">
+          <Link href="/"   className="hover:text-gray-300 cursor-pointer p-4">
             Contact Us
           </Link>
-          <Link href="/"  aria-disabled className="hover:text-gray-300 cursor-pointer p-4">
+          <Link href="/"  className="hover:text-gray-300 cursor-pointer p-4">
             For Landlords
           </Link>
           {user ? <AuthenticatedMenu /> : <UnAuthenticatedMenu />}

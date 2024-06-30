@@ -19,6 +19,7 @@ const AuthenticatedMenu = () => {
 
   const handleClearApartments = () => {
     deleteApartmentsAndRooms();
+    router.refresh();
     closeMenu();
   };
 
