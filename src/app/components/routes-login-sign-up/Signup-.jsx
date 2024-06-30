@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { signUpUser } from '@/utils/database'; // Importa la función de signup
+import { signUpUser } from '@/utils/database'; 
 
 const SignUp = () => {
   const [name, setName] = useState('');
@@ -13,13 +13,12 @@ const SignUp = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
 
-    // Validación del formato de email
     if (!validateEmail(email)) {
       alert('El email no es válido');
       return;
     }
 
-    // Validación de longitud de contraseña
+    
     if (password.length < 8) {
       alert('La contraseña debe tener al menos 8 caracteres');
       return;
@@ -27,17 +26,17 @@ const SignUp = () => {
 
     setIsSubmitting(true);
     try {
-      await signUpUser(email, password, name); // Llama a la función signUpUser para registrar al usuario
-      setNotification('A confirmation email has been sent to your email address.'); // Establece la notificación
+      await signUpUser(email, password, name); 
+      setNotification('A confirmation email has been sent to your email address.'); 
       setIsSubmitting(false);
-      router.push('/login'); // Redirige a la página de inicio de sesión después del registro exitoso
+      router.push('/login'); 
     } catch (error) {
-      alert(error.message); // Muestra un mensaje de alerta en caso de error
+      alert(error.message); 
       setIsSubmitting(false);
     }
   };
 
-  // Función para validar el formato de email
+ 
   const validateEmail = (email) => {
     const re = /\S+@\S+\.\S+/;
     return re.test(email);

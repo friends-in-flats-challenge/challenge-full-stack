@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { createApartment } from '@/utils/database2'; // Importa la función de creación
+import { createApartment } from '@/utils/database2';
 
 const Apartments = () => {
   const [formData, setFormData] = useState({
@@ -40,7 +40,7 @@ const Apartments = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form data submitted:', formData); // Asegúrate de que formData contenga los datos esperados
+    console.log('Form data submitted:', formData); 
   
     try {
       const data = await createApartment(formData);
@@ -64,7 +64,7 @@ const Apartments = () => {
             value={formData.name}
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded-lg"
-            required // Campo obligatorio
+            required 
           />
         </div>
         <div className="mb-4">
@@ -75,7 +75,7 @@ const Apartments = () => {
             value={formData.location}
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded-lg"
-            required // Campo obligatorio
+            required 
           />
         </div>
         <div className="mb-4">
@@ -86,7 +86,7 @@ const Apartments = () => {
             value={formData.price}
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded-lg"
-            required // Campo obligatorio
+            required 
           />
         </div>
         <div className="mb-4">
@@ -96,7 +96,7 @@ const Apartments = () => {
             value={formData.description}
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded-lg"
-            required // Campo obligatorio
+            required 
           />
         </div>
 
@@ -112,7 +112,7 @@ const Apartments = () => {
                   value={room.name}
                   onChange={(e) => handleRoomChange(index, e)}
                   className="w-full px-3 py-2 border rounded-lg"
-                  required // Campo obligatorio
+                  required 
                 />
               </div>
               <div className="mb-2">
@@ -123,7 +123,7 @@ const Apartments = () => {
                   value={room.size}
                   onChange={(e) => handleRoomChange(index, e)}
                   className="w-full px-3 py-2 border rounded-lg"
-                  required // Campo obligatorio
+                  required 
                 />
               </div>
               <div className="mb-2">
@@ -134,7 +134,7 @@ const Apartments = () => {
                   value={room.equipment}
                   onChange={(e) => handleRoomChange(index, e)}
                   className="w-full px-3 py-2 border rounded-lg"
-                  required // Campo obligatorio
+                  required 
                 />
               </div>
               <div className="mb-2">
@@ -145,7 +145,7 @@ const Apartments = () => {
                   value={room.image_url}
                   onChange={(e) => handleRoomChange(index, e)}
                   className="w-full px-3 py-2 border rounded-lg"
-                  required // Campo obligatorio
+                  required 
                 />
               </div>
             </div>
@@ -168,7 +168,6 @@ const Apartments = () => {
       </form>
       {message && <p className="mt-4 text-center text-green-500">{message}</p>}
 
-      {/* Media queries for responsive design */}
       <style jsx>{`
         @media (max-width: 768px) {
           .max-w-xl {

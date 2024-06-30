@@ -2,23 +2,23 @@
 import '@/app/globals.css';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import { deleteApartmentsAndRooms } from '@/utils/database2';
 import { useAuth } from '@/context/authprovider';
 import { getUserByEmail } from '@/utils/database';
 
 const AuthenticatedMenu = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, authReady } = useAuth();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState(null);
 
   const handleAddApartment = () => {
-    router.push('/add-apartment');
+    router.push('/add-apartament');
     closeMenu();
   };
 
   const handleClearApartments = () => {
-   
+    deleteApartmentsAndRooms();
     closeMenu();
   };
 
@@ -80,18 +80,33 @@ const AuthenticatedMenu = () => {
         <div className="absolute right-0 mt-2 w-48 bg-white text-black rounded shadow-lg z-50">
           <div className="flex items-center px-4 py-2">
             <span className="text-left">Hello, {user}</span>
+            {authReady && (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                className="h-6 w-6 ml-auto cursor-pointer"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            )}
           </div>
           <button
             onClick={handleAddApartment}
             className="block w-full px-4 py-2 text-left hover:bg-gray-200"
           >
-            Añadir Apartamento
+            Add apartament
           </button>
           <button
             onClick={handleClearApartments}
             className="block w-full px-4 py-2 text-left hover:bg-gray-200"
           >
-            Limpiar Apartamentos
+           Clear Apartaments
           </button>
           <button
             onClick={handleLogout}
@@ -99,15 +114,8 @@ const AuthenticatedMenu = () => {
           >
             Logout
           </button>
-          <div>
-            <button
-              className="fixed bottom-10 right-10 bg-green-500 text-white rounded-full w-12 h-12 flex items-center justify-center text-xl shadow-md hover:bg-green-600 transition duration-300 ease-in-out"
-              onClick={handleAddApartment}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"></path>
-              </svg>
-            </button>
+          <div className="flex justify-between px-4">
+        
           </div>
         </div>
       )}
@@ -137,6 +145,7 @@ const AuthenticatedMenu = () => {
     </div>
   );
 };
+
 
 const UnAuthenticatedMenu = () => {
   const router = useRouter();

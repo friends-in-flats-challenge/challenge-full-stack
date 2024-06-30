@@ -1,6 +1,5 @@
 import { useSupabase } from './Supabase';
 
-// Función para iniciar sesión con correo y contraseña
 export const signInUser = async (email, password) => {
   const supabase = useSupabase();
   try {
@@ -18,7 +17,7 @@ export const signInUser = async (email, password) => {
   }
 };
 
-// Función para registrar un nuevo usuario
+
 export const signUpUser = async (email, password, name) => {
   const supabase = useSupabase();
   try {
@@ -30,7 +29,7 @@ export const signUpUser = async (email, password, name) => {
       console.error('Error al registrarse con Supabase Auth:', error.message);
       throw error;
     }
-    // Insertar el nombre del usuario en la base de datos
+
     const { data: insertData, error: insertError } = await supabase
       .from('Users')
       .insert([{ id: data.user.id, email, name, created_at: new Date() }]);
@@ -46,7 +45,7 @@ export const signUpUser = async (email, password, name) => {
   }
 };
 
-// Función para verificar la sesión del usuario actual
+
 export const checkSession = async () => {
   const supabase = useSupabase();
   try {
@@ -58,7 +57,6 @@ export const checkSession = async () => {
   }
 };
 
-// Función para obtener todos los usuarios
 export const getUsers = async () => {
   const supabase = useSupabase();
   try {
@@ -68,7 +66,7 @@ export const getUsers = async () => {
     if (error) {
       throw error;
     }
-    console.log('Datos de usuarios:', data); // Agregar este console.log para verificar los datos devueltos
+    console.log('Datos de usuarios:', data); 
     return data;
   } catch (error) {
     console.error('Error al obtener usuarios:', error.message);
@@ -76,7 +74,7 @@ export const getUsers = async () => {
   }
 };
 
-// Función para enviar un correo con un OTP (One-Time Password)
+
 export const sendOtp = async (email) => {
   const supabase = useSupabase();
   try {
@@ -91,7 +89,7 @@ export const sendOtp = async (email) => {
   }
 };
 
-// Función para obtener un usuario por email
+
 export const getUserByEmail = async (email) => {
   const supabase = useSupabase();
   try {
@@ -105,7 +103,7 @@ export const getUserByEmail = async (email) => {
       throw error;
     }
 
-    return data; // Retorna el usuario encontrado o null si no hay coincidencias
+    return data; 
   } catch (error) {
     console.error('Error al obtener usuario por email:', error.message);
     throw error;

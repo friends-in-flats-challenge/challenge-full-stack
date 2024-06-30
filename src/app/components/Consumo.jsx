@@ -69,7 +69,7 @@ const Consumo = () => {
               <div className="p-4">
                 <h2 className="text-xl font-semibold mb-2 text-gray-700">{apartment.name}</h2>
                 <p className="mb-2 text-gray-600"><strong>Location:</strong> {apartment.location}</p>
-                <p className="mb-2 text-gray-600"><strong>Price:</strong> €{apartment.price} / month</p>
+                <p className="mb-2 text-gray-600"><strong></strong> €{apartment.price} / month</p>
                 <p className="mb-2 text-gray-600"><strong>Description:</strong> {apartment.description}</p>
               </div>
             </div>

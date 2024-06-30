@@ -1,7 +1,7 @@
-import supabase from './Supabase'; // Asegúrate de que la ruta sea correcta
+import supabase from './Supabase'; 
 
 const MAX_RETRIES = 3;
-const RETRY_DELAY = 1000; // Tiempo en milisegundos (1 segundo)
+const RETRY_DELAY = 1000; 
 
 export const signInUser = async (email, password) => {
   let retries = 0;

@@ -21,10 +21,10 @@ const Login = () => {
       }
       const user = await login(email, password);
       
-      // Save user information in localStorage
+  
       localStorage.setItem('user', JSON.stringify(user));
       
-      // Login successful, redirect to home page
+     
       router.push('/');
     } catch (error) {
       setError(error.message);
@@ -71,7 +71,7 @@ const Login = () => {
         </div>
       </form>
 
-      {/* Media Queries */}
+   
       <style jsx>{`
         @media (max-width: 768px) {
           .container {

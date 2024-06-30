@@ -1,17 +1,15 @@
 "use client";
-
-import { all } from "axios";
 import { supabase } from "./Supabase";
 
 export const createApartment = async (apartmentData) => {
   const { rooms, ...apartment } = apartmentData;
 
   try {
-    // Insertar el apartamento primero
+  
     const { data: insertedApartments, error: apartmentError } = await supabase
       .from('apartments')
       .insert([apartment])
-      .select('*'); // Asegúrate de que retorne los datos insertados
+      .select('*');
 
     if (apartmentError) {
       throw new Error(apartmentError.message);
@@ -21,18 +19,17 @@ export const createApartment = async (apartmentData) => {
       throw new Error('No apartments were inserted');
     }
 
-    const insertedApartment = insertedApartments[0]; // Obtener el primer apartamento insertado
+    const insertedApartment = insertedApartments[0]; 
 
-    // Insertar las habitaciones asociadas al apartamento, si existen
     if (rooms && rooms.length > 0) {
-      // Insertar cada habitación asociada al apartamento
+   
       const roomInsertResults = await Promise.all(
         rooms.map(async (room) => {
           const { data: insertedRoom, error: roomError } = await supabase
             .from('rooms')
             .insert({
               ...room,
-              apartment_id: insertedApartment.id, // Asignar el ID del apartamento
+              apartment_id: insertedApartment.id, 
             });
 
           if (roomError) {
@@ -45,7 +42,7 @@ export const createApartment = async (apartmentData) => {
 
       return { apartment: insertedApartment, rooms: roomInsertResults };
     } else {
-      return { apartment: insertedApartment, rooms: [] }; // Retornar un arreglo vacío si no hay habitaciones
+      return { apartment: insertedApartment, rooms: [] }; 
     }
   } catch (error) {
     console.error('Error creating apartment and rooms:', error.message);
@@ -53,7 +50,7 @@ export const createApartment = async (apartmentData) => {
   }
 };
 
-// Función para obtener todos los apartamentos
+
 export const getApartments = async () => {
   const { data, error } = await supabase.from('apartments').select('*');
 
@@ -64,7 +61,7 @@ export const getApartments = async () => {
   return data;
 };
 
-// Función para obtener un apartamento por ID
+
 export const getApartmentById = async (id) => {
   const { data, error } = await supabase.from('apartments').select('*').eq('id', id).single();
 
@@ -75,7 +72,7 @@ export const getApartmentById = async (id) => {
   return data;
 };
 
-// Función para actualizar un apartamento por ID
+
 export const updateApartment = async (id, updatedData) => {
   const { data, error } = await supabase.from('apartments').update(updatedData).eq('id', id);
 
@@ -86,7 +83,7 @@ export const updateApartment = async (id, updatedData) => {
   return data;
 };
 
-// Función para eliminar un apartamento por ID
+
 export const deleteApartment = async (id) => {
   const { data, error } = await supabase.from('apartments').delete().eq('id', id);
 
@@ -97,7 +94,7 @@ export const deleteApartment = async (id) => {
   return data;
 };
 
-// Función para crear una nueva habitación
+
 export const createRoom = async (roomData) => {
   const { data, error } = await supabase.from('rooms').insert([roomData]);
 
@@ -108,7 +105,7 @@ export const createRoom = async (roomData) => {
   return data;
 };
 
-// Función para obtener todas las habitaciones de un apartamento
+
 export const getRoomsByApartmentId = async (apartmentId) => {
   const { data, error } = await supabase.from('rooms').select('*').eq('apartment_id', apartmentId);
 
@@ -119,7 +116,7 @@ export const getRoomsByApartmentId = async (apartmentId) => {
   return data;
 };
 
-// Función para obtener una habitación por ID
+
 export const getRoomById = async (id) => {
   const { data, error } = await supabase.from('rooms').select('*').eq('id', id).single();
 
@@ -130,7 +127,7 @@ export const getRoomById = async (id) => {
   return data;
 };
 
-// Función para actualizar una habitación por ID
+
 export const updateRoom = async (id, updatedData) => {
   const { data, error } = await supabase.from('rooms').update(updatedData).eq('id', id);
 
@@ -141,7 +138,6 @@ export const updateRoom = async (id, updatedData) => {
   return data;
 };
 
-// Función para eliminar una habitación por ID
 export const deleteRoom = async (id) => {
   const { data, error } = await supabase.from('rooms').delete().eq('id', id);
 
@@ -152,3 +148,32 @@ export const deleteRoom = async (id) => {
   return data;
 };
 
+
+
+
+export const deleteApartmentsAndRooms = async () => {
+  try {
+ 
+    const { error: apartmentsError } = await supabase
+      .rpc('truncate_table', { table_name: 'apartments' });
+
+    if (apartmentsError) {
+      throw new Error(apartmentsError.message);
+    }
+
+    console.log('All apartments have been truncated successfully.');
+
+  
+    const { error: roomsError } = await supabase
+      .rpc('truncate_table', { table_name: 'rooms' });
+
+    if (roomsError) {
+      throw new Error(roomsError.message);
+    }
+
+    console.log('All rooms have been truncated successfully.');
+  } catch (error) {
+    console.error('Error truncating apartments and rooms:', error.message);
+    throw new Error('Failed to truncate apartments and rooms');
+  }
+};

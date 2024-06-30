@@ -1,4 +1,4 @@
-import supabase from './Supabase'; // Asegúrate de importar tu instancia de Supabase adecuadamente
+import supabase from './Supabase'; 
 
 export const verifyCode = async (tokenHash) => {
   try {

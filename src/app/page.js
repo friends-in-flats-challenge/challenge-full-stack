@@ -1,18 +1,18 @@
 "use client";
 import { useState, useEffect } from "react";
-import { getUserByEmail } from "@/utils/database"; // Asegúrate de tener estas funciones en tu archivo de base de datos
-import { useAuth } from "@/context/authprovider"; // Utilizar tu contexto de autenticación
+import { getUserByEmail } from "@/utils/database";
+import { useAuth } from "@/context/authprovider"; 
 import Consumo from "./components/Consumo";
 
 export default function Home() {
   const [selectedOption, setSelectedOption] = useState(null);
-  const { user,  authReady } = useAuth(); // Obtener el usuario y la función de logout del contexto de autenticación
+  const { user,  authReady } = useAuth(); 
 
 
   useEffect(() => {
     if (authReady && user) {
       const checkVerification = async () => {
-        const userData = await getUserByEmail(user.email); // Supón que esta función retorna el usuario
+        const userData = await getUserByEmail(user.email); 
         if (userData && userData.name) {
           setIsVerified(true);
         }
