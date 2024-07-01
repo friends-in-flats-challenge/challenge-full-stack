@@ -1,9 +1,10 @@
 "use client";
 import React from 'react';
 import { useState } from 'react';
+import Link from 'next/link';
 import { useAuth } from '@/context/authprovider';
 import { useRouter } from 'next/navigation';
-import { AuthenticatedMenu,UnAuthenticatedMenu } from './Profile';
+import { AuthenticatedMenu,UnAuthenticatedMenu } from './routes-login-sign-up/Profile';
 
 const Header = () => {
   const { authReady, user } = useAuth();
