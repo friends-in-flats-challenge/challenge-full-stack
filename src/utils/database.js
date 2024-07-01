@@ -1,32 +1,22 @@
-import { useSupabase } from './Supabase';
+import { supabase } from './Supabase';
 
 export const signInUser = async (email, password) => {
-  const supabase = useSupabase();
   try {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
       throw error;
     }
     return data.user;
   } catch (error) {
-    console.error('Error al iniciar sesión:', error.message);
+    console.error('Error signing in:', error.message);
     throw error;
   }
 };
 
-
 export const signUpUser = async (email, password, name) => {
-  const supabase = useSupabase();
   try {
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
+    const { data, error } = await supabase.auth.signUp({ email, password });
     if (error) {
-      console.error('Error al registrarse con Supabase Auth:', error.message);
       throw error;
     }
 
@@ -34,31 +24,27 @@ export const signUpUser = async (email, password, name) => {
       .from('Users')
       .insert([{ id: data.user.id, email, name, created_at: new Date() }]);
     if (insertError) {
-      console.error('Error al insertar usuario en la base de datos:', insertError.message);
       throw insertError;
     }
-    console.log('Usuario registrado correctamente:', insertData);
+    console.log('User registered successfully:', insertData);
     return insertData;
   } catch (error) {
-    console.error('Error al registrar usuario:', error.message);
+    console.error('Error signing up:', error.message);
     throw error;
   }
 };
 
-
 export const checkSession = async () => {
-  const supabase = useSupabase();
   try {
     const user = supabase.auth.user();
     return user;
   } catch (error) {
-    console.error('Error al obtener la sesión:', error.message);
+    console.error('Error checking session:', error.message);
     throw error;
   }
 };
 
 export const getUsers = async () => {
-  const supabase = useSupabase();
   try {
     const { data, error } = await supabase
       .from('Users')
@@ -66,17 +52,15 @@ export const getUsers = async () => {
     if (error) {
       throw error;
     }
-    console.log('Datos de usuarios:', data); 
+    console.log('User data:', data);
     return data;
   } catch (error) {
-    console.error('Error al obtener usuarios:', error.message);
+    console.error('Error fetching users:', error.message);
     throw error;
   }
 };
 
-
 export const sendOtp = async (email) => {
-  const supabase = useSupabase();
   try {
     const { data, error } = await supabase.auth.api.resetPasswordForEmail(email);
     if (error) {
@@ -84,14 +68,12 @@ export const sendOtp = async (email) => {
     }
     return data;
   } catch (error) {
-    console.error('Error al enviar el correo con OTP:', error.message);
+    console.error('Error sending OTP email:', error.message);
     throw error;
   }
 };
 
-
 export const getUserByEmail = async (email) => {
-  const supabase = useSupabase();
   try {
     const { data, error } = await supabase
       .from('Users')
@@ -103,9 +85,9 @@ export const getUserByEmail = async (email) => {
       throw error;
     }
 
-    return data; 
+    return data;
   } catch (error) {
-    console.error('Error al obtener usuario por email:', error.message);
+    console.error('Error fetching user by email:', error.message);
     throw error;
   }
 };
