@@ -51,7 +51,7 @@ const AuthenticatedMenu = () => {
   const handleLogout = async () => {
     try {
       await logout();
-      router.push('/Login');
+      router.push('/login');
     } catch (error) {
       console.error('Error al cerrar sesión:', error.message);
       setError('Failed to log out. Please try again.');
@@ -125,7 +125,7 @@ const AuthenticatedMenu = () => {
         <div className="absolute right-0 mt-2 w-48 bg-white text-black rounded-md shadow-lg z-50">
           <button
             onClick={() => {
-              router.push('/Login');
+              router.push('/login');
               closeMenu();
             }}
             className="block px-4 py-2 hover:bg-gray-200 cursor-pointer w-full text-left"
@@ -134,7 +134,7 @@ const AuthenticatedMenu = () => {
           </button>
           <button
             onClick={() => {
-              router.push('/Signup');
+              router.push('/signup');
               closeMenu();
             }}
             className="block px-4 py-2 hover:bg-gray-200 cursor-pointer w-full text-left"
@@ -174,7 +174,7 @@ const UnAuthenticatedMenu = () => {
         <div className="absolute right-0 mt-2 w-48 bg-white text-black rounded-md shadow-lg z-50">
           <button
             onClick={() => {
-              router.push('/Login');
+              router.push('/login');
               closeMenu();
             }}
             className="block px-4 py-2 hover:bg-gray-200 cursor-pointer w-full text-left"
