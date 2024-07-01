@@ -1,5 +1,5 @@
 import '@/app/globals.css';
-import Apartments from '@/app/components/apartaments/apartamento';
+import Apartments from '@/app/components/apartaments/Apartamento';
 import Header from '@/app/components/Header';
 const Apartamentspage = () => {
   return(

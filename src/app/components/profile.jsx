@@ -13,7 +13,7 @@ const AuthenticatedMenu = () => {
   const [error, setError] = useState(null);
 
   const handleAddApartment = () => {
-    router.push('/add-apartament');
+    router.push('/Add-apartament');
     closeMenu();
   };
 
@@ -50,7 +50,7 @@ const AuthenticatedMenu = () => {
   const handleLogout = async () => {
     try {
       await logout();
-      router.push('/login');
+      router.push('/Login');
     } catch (error) {
       console.error('Error al cerrar sesión:', error.message);
       setError('Failed to log out. Please try again.');
@@ -124,7 +124,7 @@ const AuthenticatedMenu = () => {
         <div className="absolute right-0 mt-2 w-48 bg-white text-black rounded-md shadow-lg z-50">
           <button
             onClick={() => {
-              router.push('/login');
+              router.push('/Login');
               closeMenu();
             }}
             className="block px-4 py-2 hover:bg-gray-200 cursor-pointer w-full text-left"
@@ -133,7 +133,7 @@ const AuthenticatedMenu = () => {
           </button>
           <button
             onClick={() => {
-              router.push('/signup');
+              router.push('/Signup');
               closeMenu();
             }}
             className="block px-4 py-2 hover:bg-gray-200 cursor-pointer w-full text-left"
@@ -173,7 +173,7 @@ const UnAuthenticatedMenu = () => {
         <div className="absolute right-0 mt-2 w-48 bg-white text-black rounded-md shadow-lg z-50">
           <button
             onClick={() => {
-              router.push('/login');
+              router.push('/Login');
               closeMenu();
             }}
             className="block px-4 py-2 hover:bg-gray-200 cursor-pointer w-full text-left"

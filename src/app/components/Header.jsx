@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/context/authprovider';
-import { AuthenticatedMenu, UnAuthenticatedMenu } from './profile';
+import { AuthenticatedMenu, UnAuthenticatedMenu } from './Profile';
 
 const Header = () => {
   const { authReady, user } = useAuth();

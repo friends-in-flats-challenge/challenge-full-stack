@@ -29,7 +29,7 @@ const SignUp = () => {
       await signUpUser(email, password, name); 
       setNotification('A confirmation email has been sent to your email address.'); 
       setIsSubmitting(false);
-      router.push('/login'); 
+      router.push('/Login'); 
     } catch (error) {
       alert(error.message); 
       setIsSubmitting(false);
