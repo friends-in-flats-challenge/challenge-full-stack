@@ -1,10 +1,9 @@
 "use client";
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import React from 'react';
+import { useState } from 'react';
 import { useAuth } from '@/context/authprovider';
+import { useRouter } from 'next/navigation';
 import { AuthenticatedMenu,UnAuthenticatedMenu } from './Profile';
-import Apartments from './apartaments/Apartamento';
 
 const Header = () => {
   const { authReady, user } = useAuth();
