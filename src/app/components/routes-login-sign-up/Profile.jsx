@@ -14,7 +14,7 @@ const AuthenticatedMenu = () => {
   const [error, setError] = useState(null);
 
   const handleAddApartment = () => {
-    router.push('/Add-apartament');
+    router.push('/add-apartament');
     closeMenu();
   };
 
@@ -183,7 +183,7 @@ const UnAuthenticatedMenu = () => {
           </button>
           <button
             onClick={() => {
-              router.push('/signup');
+              router.push('/Signup');
               closeMenu();
             }}
             className="block px-4 py-2 hover:bg-gray-200 cursor-pointer w-full text-left"

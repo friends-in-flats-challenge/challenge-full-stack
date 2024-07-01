@@ -18,7 +18,6 @@ const SignUp = () => {
       return;
     }
 
-    
     if (password.length < 8) {
       alert('La contraseña debe tener al menos 8 caracteres');
       return;
@@ -26,17 +25,19 @@ const SignUp = () => {
 
     setIsSubmitting(true);
     try {
-      await signUpUser(email, password, name); 
-      setNotification('A confirmation email has been sent to your email address.'); 
+      await signUpUser(email, password, name);
+      setNotification('A confirmation email has been sent to your email address.');
       setIsSubmitting(false);
-      router.push('/Login'); 
     } catch (error) {
-      alert(error.message); 
+      alert(error.message);
       setIsSubmitting(false);
+      return;
     }
+    
+
+    router.push('/Login');
   };
 
- 
   const validateEmail = (email) => {
     const re = /\S+@\S+\.\S+/;
     return re.test(email);
