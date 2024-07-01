@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/context/authprovider';
 import { AuthenticatedMenu,UnAuthenticatedMenu } from './Profile';
+import Apartments from './apartaments/Apartamento';
 
 const Header = () => {
   const { authReady, user } = useAuth();
