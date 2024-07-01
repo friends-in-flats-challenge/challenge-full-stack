@@ -1,6 +1,7 @@
 "use client";
 import '@/app/globals.css';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useState,useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { deleteApartmentsAndRooms } from '@/utils/database2';
 import { useAuth } from '@/context/authprovider';

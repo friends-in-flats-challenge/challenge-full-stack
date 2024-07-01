@@ -1,7 +1,8 @@
 "use client";
-import React, { useState } from 'react';
-import { createApartment } from '@/utils/database2';
 
+import { createApartment } from '@/utils/database2';
+import React from 'react';
+import { useState } from 'react';
 const Apartments = () => {
   const [formData, setFormData] = useState({
     name: '',
